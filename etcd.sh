@@ -4,19 +4,28 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+#远程下载地址
+remote_dl_url="https://github.com/coreos/etcd/releases/download/v3.2.20/etcd-v3.2.20-linux-amd64.tar.gz"
+etcd_filename="etcd.tar.gz"
+
 if [[ -e /usr/bin/etcd ]]; then
     echo "/usr/bin/已存在文件 etcd" >&2
     exit 1
 fi
 
-if [[ -e etcd-v3.2.20-linux-amd64.tar.gz ]];then
+if [[ -e $etcd_filename ]];then
 	echo "已存在etcd-v3.2.20-linux-amd64.tar.gz" >&2
 	exit 1
 fi
 echo "正在下载etcd压缩包文件"
-wget https://github.com/coreos/etcd/releases/download/v3.2.20/etcd-v3.2.20-linux-amd64.tar.gz
-tar xf etcd-v3.2.20-linux-amd64.tar.gz
-cd etcd-v3.2.20-linux-amd64
+if [[ $(which curl) ]]; then
+	wget $remote_dl_url -O $etcd_filename
+else
+    echo "Couldn't find curl or wget.  Bailing out." >&2
+    exit 4
+  fi
+tar xf etcd_filename
+cd etcd
 cp etcd etcdctl  /usr/bin/
 mkdir -p /var/lib/etcd
 mkdir -p /etc/etcd
