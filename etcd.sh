@@ -25,7 +25,7 @@ else
     exit 1
 fi
 echo "解压文件..."
-tar xf etcd_filename
+tar xf $etcd_filename
 cd etcd
 cp etcd etcdctl  /usr/bin/
 mkdir -p /var/lib/etcd
