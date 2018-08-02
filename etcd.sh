@@ -27,8 +27,8 @@ else
 fi
 mkdir -p etcd
 echo "解压文件..." >&2
-tar xf $etcd_filename -C etcd
-cd etcd
+tar xf $etcd_filename
+cd etcd-v3.2.20-linux-amd64
 cp etcd etcdctl  /usr/bin/
 mkdir -p /var/lib/etcd
 mkdir -p /etc/etcd
