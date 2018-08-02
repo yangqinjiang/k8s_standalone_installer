@@ -7,6 +7,7 @@ set -o pipefail
 #远程下载地址
 remote_dl_url="https://github.com/coreos/etcd/releases/download/v3.2.20/etcd-v3.2.20-linux-amd64.tar.gz"
 etcd_filename="etcd.tar.gz"
+dir_filename="etcd-v3.2.20-linux-amd64"
 
 if [[ -e /usr/bin/etcd ]]; then
     echo "/usr/bin/已存在文件 etcd" >&2
@@ -28,7 +29,7 @@ fi
 mkdir -p etcd
 echo "解压文件..." >&2
 tar xf $etcd_filename
-cd etcd-v3.2.20-linux-amd64
+cd $dir_filename
 cp etcd etcdctl  /usr/bin/
 mkdir -p /var/lib/etcd
 mkdir -p /etc/etcd
@@ -51,3 +52,11 @@ echo "启动服务..."  >&2
 systemctl daemon-reload
 systemctl start etcd
 systemctl status etcd.service
+
+sleep 1
+echo "查看服务状态..."  >&2
+netstat -lntp|grep etcd
+sleep 1
+etcdctl  cluster-health
+
+echo -e "\033[32mDONE\033[0m"
