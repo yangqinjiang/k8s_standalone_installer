@@ -204,17 +204,18 @@ openssl x509 -req -in cs_client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -ou
 echo -e "\033[44;37m-------7、启动服务-------\033[0m"
 
 systemctl daemon-reload
-
+sleep 1
 systemctl enable kube-apiserver
 systemctl start kube-apiserver
 
-
+sleep 1
 systemctl enable kube-controller-manager
 systemctl start kube-controller-manager
 
-
+sleep 1
 systemctl enable kube-scheduler
 systemctl start kube-scheduler
+sleep 1
 echo -e "\033[44;37m-------8、查看状态-------\033[0m"
 systemctl status kube-apiserver
 systemctl status kube-controller-manager
