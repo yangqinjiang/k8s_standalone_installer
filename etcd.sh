@@ -18,11 +18,11 @@ if [[ -e $etcd_filename ]];then
 	exit 1
 fi
 echo "正在下载etcd压缩包文件"
-if [[ $(which curl) ]]; then
+if [[ $(which wget) ]]; then
 	wget $remote_dl_url -O $etcd_filename
 else
-    echo "Couldn't find curl or wget.  Bailing out." >&2
-    exit 4
+    echo "Couldn't find wget . Bailing out." >&2
+    exit 1
   fi
 tar xf etcd_filename
 cd etcd
