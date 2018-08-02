@@ -215,6 +215,7 @@ systemctl start kube-controller-manager
 sleep 1
 systemctl enable kube-scheduler
 systemctl start kube-scheduler
+
 sleep 1
 echo -e "\033[44;37m-------8、查看状态-------\033[0m"
 systemctl status kube-apiserver
