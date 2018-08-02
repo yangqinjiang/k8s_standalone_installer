@@ -10,7 +10,7 @@ etcd_filename="etcd.tar.gz"
 dir_filename="etcd-v3.2.20-linux-amd64"
 
 if [[ -e /usr/bin/etcd ]]; then
-    echo -e "\033[41;37m /usr/bin/已存在文件 etcd \033[0m" >&2
+    echo -e "\033[41;37m 已存在文件  /usr/bin/etcd \033[0m" >&2
     exit 1
 fi
 
@@ -26,10 +26,12 @@ else
 	    exit 1
 	fi
 fi
+
 mkdir -p etcd
 echo -e "\033[44;37m解压文件...\033[0m" >&2
 tar xf $etcd_filename
 cd $dir_filename
+echo -e "\033[44;37mCOPY文件...\033[0m" >&2
 cp etcd etcdctl  /usr/bin/
 mkdir -p /var/lib/etcd
 mkdir -p /etc/etcd
