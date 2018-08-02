@@ -16,15 +16,14 @@ fi
 if [[ -e $etcd_filename ]];then
 	echo "已存在etcd.tar.gz" >&2
 else
-	echo "使用已存在的文件..." >&2
-fi
-
-if [[ $(which wget) ]]; then
-	echo "正在下载etcd压缩包文件"  >&2
-	wget $remote_dl_url -O $etcd_filename
-else
-    echo "Couldn't find wget . Bailing out." >&2
-    exit 1
+	echo "下载文件..." >&2
+	if [[ $(which wget) ]]; then
+		echo "正在下载etcd压缩包文件"  >&2
+		wget $remote_dl_url -O $etcd_filename
+	else
+	    echo "Couldn't find wget . Bailing out." >&2
+	    exit 1
+	fi
 fi
 echo "解压文件..." >&2
 tar xf $etcd_filename
