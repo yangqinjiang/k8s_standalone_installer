@@ -23,7 +23,8 @@ if [[ $(which wget) ]]; then
 else
     echo "Couldn't find wget . Bailing out." >&2
     exit 1
-  fi
+fi
+echo "解压文件..."
 tar xf etcd_filename
 cd etcd
 cp etcd etcdctl  /usr/bin/
