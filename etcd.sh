@@ -21,7 +21,7 @@ cp etcd etcdctl  /usr/bin/
 mkdir -p /var/lib/etcd
 mkdir -p /etc/etcd
 echo "保存文件  etcd.service"
-cat > /usr/lib/systemd/system/1 <<EOF
+cat > /usr/lib/systemd/system/etcd.service <<EOF
 [Unit]
 Description=Etcd Server
 After=network.target
