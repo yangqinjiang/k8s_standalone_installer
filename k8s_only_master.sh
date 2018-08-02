@@ -16,10 +16,10 @@ cd kubernetes_bin
 
 echo -e "\033[42;37m-------0, 正在安装 kube-apiserver-------\033[0m"
 #防止覆盖
-if [[ -e /usr/bin/kube-apiserver ]]; then
-    echo -e "\033[41;37m 已存在文件  /usr/bin/kube-apiserver \033[0m" >&2
-    exit 1
-fi
+# if [[ -e /usr/bin/kube-apiserver ]]; then
+#     echo -e "\033[41;37m 已存在文件  /usr/bin/kube-apiserver \033[0m" >&2
+#     exit 1
+# fi
 
 
 echo -e "\033[44;37m-------1, COPY bin 文件-------\033[0m" >&2
@@ -38,7 +38,7 @@ After=etcd.service
 
 [Service]
 EnvironmentFile=/etc/kubernetes/apiserver
-ExecStart=/usr/bin/kube-apiserver $KUBE_API_ARGS
+ExecStart=/usr/bin/kube-apiserver \$KUBE_API_ARGS
 Restart=on-failure
 Type=notify
 LimitNOFILE=65536
