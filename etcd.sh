@@ -14,7 +14,7 @@ if [[ -e etcd-v3.2.20-linux-amd64.tar.gz ]];then
 	exit 1
 fi
 echo "正在下载etcd压缩包文件"
-wget https://github.com/coreos/etcd/releases/download/v3.2.20/etcd-v3.2.20-linux-amd64.tar.gz -O 
+wget https://github.com/coreos/etcd/releases/download/v3.2.20/etcd-v3.2.20-linux-amd64.tar.gz
 tar xf etcd-v3.2.20-linux-amd64.tar.gz
 cd etcd-v3.2.20-linux-amd64
 cp etcd etcdctl  /usr/bin/
