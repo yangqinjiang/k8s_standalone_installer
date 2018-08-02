@@ -5,7 +5,7 @@ set -o nounset
 set -o pipefail
 
 
-master_inip='127.0.0.1' #本机内网IP
+master_inip='192.168.0.4' #本机内网IP
 hostname='instance-u9ukr10q' #主机名称
 
 
