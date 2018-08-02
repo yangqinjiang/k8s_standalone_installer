@@ -48,7 +48,7 @@ ExecStart=/usr/bin/etcd
 [Install]
 WantedBy=multi-user.target
 EOF
-echo -e "\033[44;37m启动服务...\033[0m"  >&2
+echo -e "\033[44;37m启动服务...\033[0m , 显示 \033[32m active (running) \033[0m 说明安装成功"  >&2
 systemctl daemon-reload
 systemctl start etcd
 systemctl status etcd.service
