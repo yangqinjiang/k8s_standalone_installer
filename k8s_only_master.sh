@@ -86,7 +86,7 @@ Requires=kube-apiserver.service
 
 [Service]
 EnvironmentFile=/etc/kubernetes/controller-manager
-ExecStart=/usr/bin/kube-controller-manager $KUBE_CONTROLLER_MANAGER_ARGS
+ExecStart=/usr/bin/kube-controller-manager \$KUBE_CONTROLLER_MANAGER_ARGS
 Restart=on-failure
 LimitNOFILE=65536
 
@@ -118,7 +118,7 @@ Requires=kube-apiserver.service
 
 [Service]
 EnvironmentFile=/etc/kubernetes/scheduler
-ExecStart=/usr/bin/kube-scheduler $KUBE_SCHEDULER_ARGS
+ExecStart=/usr/bin/kube-scheduler \$KUBE_SCHEDULER_ARGS
 Restart=on-failure
 LimitNOFILE=65536
 
