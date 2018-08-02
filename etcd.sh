@@ -10,7 +10,7 @@ etcd_filename="etcd.tar.gz"
 dir_filename="etcd-v3.2.20-linux-amd64"
 
 if [[ -e /usr/bin/etcd ]]; then
-    echo -e "\033[42;37m /usr/bin/已存在文件 etcd \033[0m" >&2
+    echo -e "\033[41;37m /usr/bin/已存在文件 etcd \033[0m" >&2
     exit 1
 fi
 
