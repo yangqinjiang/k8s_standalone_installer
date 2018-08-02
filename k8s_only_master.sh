@@ -24,6 +24,8 @@ echo -e "\033[42;37m-------0, 正在安装 kube-apiserver-------\033[0m"
 
 echo -e "\033[44;37m-------1, COPY bin 文件-------\033[0m" >&2
 cp kube-apiserver /usr/bin/
+cp kube-controller-manager /usr/bin/
+cp kube-scheduler /usr/bin/
 
 
 # kube-apiserver---------------------------------------------------
