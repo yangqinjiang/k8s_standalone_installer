@@ -10,8 +10,8 @@ hostname='instance-u9ukr10q' #主机名称
 
 
 echo -e "\033[42;37m-----------正在安装单机版的k8s组件-----------\033[0m"
-echo -e "\033[44;37m解压文件...\033[0m" >&2
-tar xf kubernetes-server-linux-amd64.tar.gz
+#echo -e "\033[44;37m解压文件...\033[0m" >&2
+#tar xf kubernetes-server-linux-amd64.tar.gz
 cd kubernetes/server/bin
 
 
