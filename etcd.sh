@@ -3,7 +3,7 @@
 set -o errexit
 set -o nounset
 set -o pipefail
-
+echo -e "\033[42;37m-----------正在安装ETCD组件-----------\033[0m"
 #远程下载地址
 remote_dl_url="https://github.com/coreos/etcd/releases/download/v3.2.20/etcd-v3.2.20-linux-amd64.tar.gz"
 etcd_filename="etcd.tar.gz"
@@ -15,9 +15,9 @@ if [[ -e /usr/bin/etcd ]]; then
 fi
 
 if [[ -e $etcd_filename ]];then
-	echo -e "已存在etcd.tar.gz" >&2
+	echo -e "\033[43;37m已存在etcd.tar.gz\033[0m" >&2
 else
-	echo -e "下载文件..." >&2
+	echo -e "\033[43;37m下载文件...\033[0m" >&2
 	if [[ $(which wget) ]]; then
 		echo "正在下载etcd压缩包文件"  >&2
 		wget $remote_dl_url -O $etcd_filename
