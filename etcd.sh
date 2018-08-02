@@ -25,6 +25,7 @@ else
 	    exit 1
 	fi
 fi
+mkdir -p etcd
 echo "解压文件..." >&2
 tar xf $etcd_filename -C etcd
 cd etcd
