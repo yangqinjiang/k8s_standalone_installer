@@ -15,25 +15,25 @@ if [[ -e /usr/bin/etcd ]]; then
 fi
 
 if [[ -e $etcd_filename ]];then
-	echo "已存在etcd.tar.gz" >&2
+	echo -e "已存在etcd.tar.gz" >&2
 else
-	echo "下载文件..." >&2
+	echo -e "下载文件..." >&2
 	if [[ $(which wget) ]]; then
 		echo "正在下载etcd压缩包文件"  >&2
 		wget $remote_dl_url -O $etcd_filename
 	else
-	    echo "Couldn't find wget . Bailing out." >&2
+	    echo -e "\033[41;37mCouldn't find wget . Bailing out.\033[0m" >&2
 	    exit 1
 	fi
 fi
 mkdir -p etcd
-echo "解压文件..." >&2
+echo -e "\033[43;37m解压文件...\033[0m" >&2
 tar xf $etcd_filename
 cd $dir_filename
 cp etcd etcdctl  /usr/bin/
 mkdir -p /var/lib/etcd
 mkdir -p /etc/etcd
-echo "保存文件  etcd.service" >&2
+echo -e "\033[43;37m保存文件  etcd.service\033[0m" >&2
 cat > /usr/lib/systemd/system/etcd.service <<EOF
 [Unit]
 Description=Etcd Server
@@ -48,13 +48,13 @@ ExecStart=/usr/bin/etcd
 [Install]
 WantedBy=multi-user.target
 EOF
-echo "启动服务..."  >&2
+echo -e "\033[43;37m启动服务...\033[0m"  >&2
 systemctl daemon-reload
 systemctl start etcd
 systemctl status etcd.service
 
 sleep 1
-echo "查看服务状态..."  >&2
+echo -e "\033[43;37m查看服务状态...\033[0m"  >&2
 netstat -lntp|grep etcd
 sleep 1
 etcdctl  cluster-health
