@@ -59,4 +59,4 @@ netstat -lntp|grep etcd
 sleep 1
 etcdctl  cluster-health
 
-echo -e "\033[42;37mDONE\033[0m"
+echo -e "\033[42;37m-----------ETCD DONE-----------\033[0m"
