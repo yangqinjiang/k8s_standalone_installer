@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: myweb
+spec:
+  type: NodePort      # 定义外网访问模式
+  ports:
+    - port: 80
+      nodePort: 30001   # 外网访问的端口,映射的本地宿主机端口
+  selector:
+    app: myweb

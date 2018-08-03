@@ -331,3 +331,12 @@ systemctl start kube-proxy
 sleep 1
 systemctl status kubelet
 systemctl status kube-proxy
+
+
+echo -e "\033[44;37m-------17,摘取阿里云的pause-amd64镜像-------\033[0m" >&2
+#注意版本号
+aliyun="registry.cn-shenzhen.aliyuncs.com/google_container_mirrors/pause-amd64:3.1"
+docker pull $aliyun
+docker tag $aliyun k8s.gcr.io/pause-amd64:3.1
+
+echo -e "\033[44;37m-------ALL DONE-------\033[0m"
