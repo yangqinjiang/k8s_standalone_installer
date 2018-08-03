@@ -5,13 +5,19 @@ set -o nounset
 set -o pipefail
 
 
+
 master_inip='192.168.0.4' #本机内网IP
 hostname='instance-u9ukr10q' #主机名称
 workdir=$(cd $(dirname $0); pwd)
 echo -e "当前脚本所在目录$workdir"
 
 echo -e "\033[42;37m-----------正在安装单机版的k8s组件-----------\033[0m"
-#echo -e "\033[44;37m解压文件...\033[0m" >&2
+echo -e "\033[44;37m停止原来的服务...\033[0m" >&2
+systemctl stop kubelet
+systemctl stop kube-proxy
+systemctl stop kube-apiserver
+systemctl stop kube-controller-manager
+systemctl stop kube-scheduler
 #tar xf kubernetes-server-linux-amd64.tar.gz
 cd kubernetes_bin
 
