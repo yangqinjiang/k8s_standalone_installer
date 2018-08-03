@@ -4,11 +4,11 @@
 
 ## 前提:
 请在当前目录下,创建 kubernetes_bin 文件夹,存在下面几个 执行文件
-------| kube-apiserver
-		kube-controller-manager
-		kubectl
-		kubelet
-		kube-proxy
-		kube-scheduler
+- kube-apiserver
+- kube-controller-manager
+- kubectl
+- kubelet
+- kube-proxy
+- kube-scheduler
 
 百度云下载链接: https://pan.baidu.com/s/1DsPXvXJH7YGQ3_8J6A5cjg 密码: tik4
