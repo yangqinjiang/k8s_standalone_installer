@@ -7,6 +7,8 @@ set -o pipefail
 
 master_inip='192.168.0.4' #本机内网IP
 hostname='instance-u9ukr10q' #主机名称
+workdir=$(cd $(dirname $0); pwd)
+echo -e "当前脚本所在目录$workdir"
 
 echo -e "\033[42;37m-----------正在安装单机版的k8s组件-----------\033[0m"
 #echo -e "\033[44;37m解压文件...\033[0m" >&2
@@ -22,7 +24,7 @@ echo -e "\033[42;37m-------0, 正在安装 kube-apiserver-------\033[0m"
 # fi
 
 
-echo -e "\033[44;37m-------1, COPY bin 文件-------\033[0m" >&2
+echo -e "\033[44;37m-------1, COPY master 的 bin 文件-------\033[0m" >&2
 cp kube-apiserver /usr/bin/
 cp kube-controller-manager /usr/bin/
 cp kube-scheduler /usr/bin/
@@ -223,3 +225,103 @@ echo -e "\033[44;37m-------8、查看状态-------\033[0m"
 systemctl status kube-apiserver
 systemctl status kube-controller-manager
 systemctl status kube-scheduler
+
+echo -e "\033[44;37m-------9、Node部署-------\033[0m"
+sleep 2
+cat > /etc/sysctl.d/k8s.conf  <<EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+echo -e "\033[44;37m-------10, COPY node 的 bin 文件-------\033[0m" >&2
+cd $workdir
+cd kubernetes_bin
+cp kubectl kubelet  kube-proxy  /usr/bin/
+
+mkdir -p /var/lib/kubelet
+mkdir -p /var/log/kubernetes
+mkdir -p /etc/kubernetes
+
+# 
+echo -e "\033[44;37m-------11, 创建kubelet证书-------\033[0m" >&2
+cd /etc/kubernetes/ssl/
+openssl genrsa -out kubelet_client.key 2048
+#  CN指定Node节点的IP , 同master的IP
+openssl req -new -key kubelet_client.key -subj "/CN=$master_inip" -out kubelet_client.csr
+openssl x509 -req -in kubelet_client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out kubelet_client.crt -days 5000
+
+echo -e "\033[44;37m-------12, kubelet.service 配置启动文件-------\033[0m" >&2
+cat > /usr/lib/systemd/system/kubelet.service  <<EOF
+[Unit]
+Description=Kubernetes API Server
+Documentation=https://kubernetes.io/doc
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/var/lib/kubelet
+ExecStart=/usr/bin/kubelet --kubeconfig=/etc/kubernetes/kubeconfig.yaml --logtostderr=false --log-dir=/var/log/kubernetes --v=2
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+echo -e "\033[44;37m-------13, kubeconfig.yaml  配置文件-------\033[0m" >&2
+cat > /etc/kubernetes/kubeconfig.yaml  <<EOF
+apiVersion: v1
+kind: Config
+users:
+- name: kubelet
+  user:
+    client-certificate: /etc/kubernetes/ssl/kubelet_client.crt
+    client-key: /etc/kubernetes/ssl/kubelet_client.key
+clusters:
+- name: local
+  cluster: 
+    certificate-authority: /etc/kubernetes/ssl/ca.crt
+    server: https://$master_inip:6443
+contexts:
+- context:
+    cluster: local
+    user: kubelet
+  name: my-context
+current-context: my-context
+EOF
+
+
+echo -e "\033[44;37m-------14, kube-proxy  启动文件-------\033[0m" >&2
+cat > /usr/lib/systemd/system/kube-proxy.service  <<EOF
+[Unit]
+Description=Kubernetes kubelet agent 
+Documentation=https://kubernetes.io/doc
+After=network.service
+Requires=network.service
+
+[Service]
+EnvironmentFile=/etc/kubernetes/proxy
+ExecStart=/usr/bin/kube-proxy \$KUBE_PROXY_ARGS  
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+echo -e "\033[44;37m-------15, kube-proxy  启动参数-------\033[0m" >&2
+cat > /etc/kubernetes/proxy  <<EOF
+KUBE_PROXY_ARGS="--master=https://$master_inip:6443  --kubeconfig=/etc/kubernetes/kubeconfig.yaml"
+EOF
+
+
+echo -e "\033[44;37m-------16, 启动服务-------\033[0m" >&2
+
+systemctl daemon-reload
+sleep 1
+systemctl enable kubelet
+systemctl enable kube-proxy
+sleep 1
+systemctl start kubelet
+systemctl start kube-proxy
+sleep 1
+systemctl status kubelet
+systemctl status kube-proxy
