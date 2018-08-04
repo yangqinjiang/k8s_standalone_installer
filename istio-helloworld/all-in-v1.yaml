@@ -17,3 +17,4 @@ spec:
         subset: v1
         port:
           number: 5000
+      weight: 100    
