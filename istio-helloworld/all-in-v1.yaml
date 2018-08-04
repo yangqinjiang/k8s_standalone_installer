@@ -15,6 +15,5 @@ spec:
     - destination:
         host: helloworld
         subset: v1
-        weight: 100
         port:
           number: 5000
