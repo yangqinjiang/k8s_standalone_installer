@@ -12,10 +12,10 @@ spec:
     - uri:
         exact: /hello
     route:
-      weight: 100
     - destination:
         host: helloworld
         port:
           number: 5000
         labels:
           version: v1
+        weight: 100  
