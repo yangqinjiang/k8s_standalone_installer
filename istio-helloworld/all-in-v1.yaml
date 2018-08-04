@@ -16,6 +16,3 @@ spec:
         host: helloworld
         port:
           number: 5000
-        labels:
-          version: v1
-        weight: 100  
