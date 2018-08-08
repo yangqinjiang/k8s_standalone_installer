@@ -72,7 +72,7 @@ KUBE_API_ARGS="--storage-backend=etcd3 \
                --client-ca-file=/etc/kubernetes/ssl/ca.crt \
                --tls-private-key-file=/etc/kubernetes/ssl/server.key  \
                --tls-cert-file=/etc/kubernetes/ssl/server.crt  \
-               --enable-admission-plugins=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAccount,DefaultStorageClass,ResourceQuota \
+               --enable-admission-plugins=Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota \
                --logtostderr=false \
                --log-dir=/var/log/kubernetes \
                --v=2"
