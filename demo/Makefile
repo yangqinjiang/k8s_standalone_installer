@@ -1,6 +1,6 @@
 init:
-	kubectl apply -f nginx.html
-	kubectl apply -f nginx-service.html
+	kubectl apply -f nginx.yaml
+	kubectl apply -f nginx-service.yaml
 clean:
-	kubectl delete -f nginx.html
-	kubectl delete -f nginx-service.html
+	kubectl delete -f nginx.yaml
+	kubectl delete -f nginx-service.yaml
