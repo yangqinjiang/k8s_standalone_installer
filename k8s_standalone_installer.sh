@@ -75,7 +75,7 @@ KUBE_API_ARGS="--storage-backend=etcd3 \
                --enable-admission-plugins=Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota \
                --logtostderr=false \
                --log-dir=/var/log/kubernetes \
-               --v=2"
+               --v=2 --allow-privileged=true"
 EOF
 
 echo -e "\033[44;37m-------kube-apiserver Config DONE-------\033[0m"
@@ -265,7 +265,7 @@ Requires=docker.service
 
 [Service]
 WorkingDirectory=/var/lib/kubelet
-ExecStart=/usr/bin/kubelet --kubeconfig=/etc/kubernetes/kubeconfig.yaml --logtostderr=false --log-dir=/var/log/kubernetes --v=2 --cgroup-driver=systemd --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice
+ExecStart=/usr/bin/kubelet --kubeconfig=/etc/kubernetes/kubeconfig.yaml --logtostderr=false --log-dir=/var/log/kubernetes --v=2 --allow-privileged=true --cgroup-driver=systemd --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice
 Restart=on-failure
 
 [Install]
