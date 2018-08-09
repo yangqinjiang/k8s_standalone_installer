@@ -6,8 +6,8 @@ set -o pipefail
 
 
 
-master_inip='192.168.0.4' #本机内网IP
-hostname='instance-u9ukr10q' #主机名称
+master_inip='172.16.0.138' #本机内网IP
+hostname='test.novalocal' #主机名称
 workdir=$(cd $(dirname $0); pwd)
 echo -e "当前脚本所在目录$workdir"
 
@@ -265,7 +265,7 @@ Requires=docker.service
 
 [Service]
 WorkingDirectory=/var/lib/kubelet
-ExecStart=/usr/bin/kubelet --kubeconfig=/etc/kubernetes/kubeconfig.yaml --logtostderr=false --log-dir=/var/log/kubernetes --v=2
+ExecStart=/usr/bin/kubelet --kubeconfig=/etc/kubernetes/kubeconfig.yaml --logtostderr=false --log-dir=/var/log/kubernetes --v=2 --cgroup-driver=systemd --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice
 Restart=on-failure
 
 [Install]
