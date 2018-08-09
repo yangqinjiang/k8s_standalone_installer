@@ -319,8 +319,8 @@ KUBE_PROXY_ARGS="--master=https://$master_inip:6443  --kubeconfig=/etc/kubernete
 EOF
 
 
-echo -e "\033[44;37m-------16, 启动服务-------\033[0m" >&2
-
+echo -e "\033[44;37m-------16,关闭系统交换, 启动服务-------\033[0m" >&2
+swapoff -a
 systemctl daemon-reload
 sleep 1
 systemctl enable kubelet
