@@ -2492,13 +2492,13 @@ metadata:
     app: istio-ingressgateway
     istio: ingressgateway
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: istio-ingressgateway
     istio: ingressgateway
   ports:
     -
-      name: http
+      name: http2
       nodePort: 31380
       port: 80
       targetPort: 80
@@ -3025,7 +3025,9 @@ spec:
                 - s390x
 ---
 apiVersion: extensions/v1beta1
-kind: Deployment
+# kind: Deployment
+# 使用DaemonSet部署方式
+kind: DaemonSet
 metadata:
   name: istio-ingressgateway
   namespace: istio-system
@@ -3037,7 +3039,8 @@ metadata:
     app: istio-ingressgateway
     istio: ingressgateway
 spec:
-  replicas: 1
+  # DaemonSet不支持replicas
+  # replicas: 1
   template:
     metadata:
       labels:
@@ -3054,12 +3057,16 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
+              # 主机80端口映射
+              hostPort: 80
             - containerPort: 443
-            - containerPort: 31400
-            - containerPort: 15011
-            - containerPort: 8060
-            - containerPort: 15030
-            - containerPort: 15031
+              # 主机443端口映射
+              hostPort: 443
+            # - containerPort: 31400
+            # - containerPort: 15011
+            # - containerPort: 8060
+            # - containerPort: 15030
+            # - containerPort: 15031
           args:
           - proxy
           - router
