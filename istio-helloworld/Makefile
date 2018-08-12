@@ -4,6 +4,7 @@ init_with_istio:
 	kubectl create -f helloworld.yaml -n istio-test
 	kubectl create -f gateway.yaml -n istio-test
 	kubectl create -f destination-rule-all.yaml -n istio-test
+	kubectl create -f both-vs.yaml -n istio-test
 clean_with_istio:
 	kubectl delete -f helloworld.yaml -n istio-test
 	kubectl delete -f gateway.yaml -n istio-test
