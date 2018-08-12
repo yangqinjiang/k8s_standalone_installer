@@ -5,9 +5,11 @@ metadata:
   labels:
     app: helloworld
 spec:
+  type: NodePort
   ports:
   - port: 5000
     name: http
+    nodePort: 9000
   selector:
     app: helloworld
 ---
