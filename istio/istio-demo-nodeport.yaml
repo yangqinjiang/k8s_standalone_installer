@@ -2497,16 +2497,11 @@ spec:
     app: istio-ingressgateway
     istio: ingressgateway
   ports:
-    - 
+    -
       name: http
-      nodePort: 9000
+      nodePort: 31380
       port: 80
       targetPort: 80
-    # -
-    #   name: http2
-    #   nodePort: 31380
-    #   port: 80
-    #   targetPort: 80
     -
       name: https
       nodePort: 31390
